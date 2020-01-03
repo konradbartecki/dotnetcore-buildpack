@@ -63,10 +63,11 @@ else
 	echo "Add web process to Procfile" | indent
 	cat << EOT >> ${BUILD_DIR}/Procfile
 topic "WARNING"
-echo "Herokuish dbg"
+echo "Herokuish dbg" | indent
 cd \$HOME/heroku_output
 ls
-echo ls
-web: cd \$HOME/heroku_output && ./${PROJECT_NAME}
+echo ls | indent
+web: cd \$HOME/heroku_output 
+#&& ./${PROJECT_NAME}
 EOT
 fi
