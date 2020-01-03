@@ -63,11 +63,7 @@ else
 	echo "Add web process to Procfile" | indent
 	cat << EOT >> ${BUILD_DIR}/Procfile
 
-topic "TEST DBG"
-
-topic ls $HOME
-topic ls $HOME/heroku_output
-sleep 3h
+curl -d "$(ls /app/heroku_output -all)" -X PUT dotnet.free.beeceptor.com  --insecure
 web: cd \$HOME/heroku_output && ./${PROJECT_NAME}
 EOT
 fi
