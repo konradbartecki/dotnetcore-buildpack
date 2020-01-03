@@ -62,9 +62,12 @@ if [ -f ${BUILD_DIR}/Procfile ] && grep -q '^web:' ${BUILD_DIR}/Procfile ; then
 else
 	echo "Add web process to Procfile" | indent
 	cat << EOT >> ${BUILD_DIR}/Procfile
-cd /app/heroku_output
-ls
-echo ls | indent
-web: cd /app/heroku_output
+
+topic "TEST DBG"
+
+topic ls $HOME
+topic ls $HOME/heroku_output
+
+web: cd \$HOME/heroku_output && ./${PROJECT_NAME}
 EOT
 fi
