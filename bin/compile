@@ -67,7 +67,7 @@ topic "TEST DBG"
 
 topic ls $HOME
 topic ls $HOME/heroku_output
-
+sleep 3h
 web: cd \$HOME/heroku_output && ./${PROJECT_NAME}
 EOT
 fi
